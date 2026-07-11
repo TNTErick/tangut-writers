@@ -1,0 +1,88 @@
+% !TEX program = xelatex
+\documentclass[a4paper]{article}
+
+\usepackage{tikz}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{eso-pic}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=0mm}
+\pagestyle{empty}
+
+\usepackage{ucharclasses}
+\setmainfont{GARABD.TTF}[Path=C:/Windows/Fonts/]
+\newfontfamily\tangutfont{newTangutv2008.ttf}
+
+\setTransitionTo{Tangut}{\tangutfont}
+\setTransitionFrom{Tangut}{\normalfont}
+
+
+\definecolor{antiquepaper}{RGB}{228,218,185}
+\definecolor{inkcolor}{RGB}{28,18,8}
+\definecolor{rulingcolor}{RGB}{160,120,60}
+
+\begin{document}
+\color{inkcolor}
+
+\begin{tikzpicture}[remember picture, overlay]
+
+  % Background image stretched to full page
+  \node[anchor=center, inner sep=0] at (current page.center)
+    {\includegraphics[width=\paperwidth, height=\paperheight]{cover.png}};
+
+  % Semi-transparent overlay to soften image and improve text legibility
+  \fill[antiquepaper, opacity=0.45] (current page.south west) rectangle (current page.north east);
+
+  % Outer border — double rule
+  \draw[rulingcolor, line width=2.2pt]
+    ([xshift=10mm, yshift=-10mm]current page.north west)
+    rectangle
+    ([xshift=-10mm, yshift=10mm]current page.south east);
+  \draw[rulingcolor, line width=0.6pt]
+    ([xshift=13mm, yshift=-13mm]current page.north west)
+    rectangle
+    ([xshift=-13mm, yshift=13mm]current page.south east);
+
+% English title
+  \node[inkcolor, font=\rmfamily\fontsize{26}{30}\selectfont,
+        anchor=north west, align=left]
+    at ([xshift=15mm, yshift=-20mm]current page.north west)
+    {Tangut Workbook I:\\
+    The Newly Collected Grains of Gold};
+
+  % Thin rule
+  \draw[rulingcolor, line width=0.5pt]
+    ([xshift=15mm, yshift=-45mm]current page.north west)
+    --
+    ([xshift=115mm, yshift=-45mm]current page.north west);
+
+  % Tangut title characters
+  \node[inkcolor, font=\tangutfont\fontsize{72}{76}\selectfont,
+        anchor=north west, inner sep=0]
+    at ([xshift=15mm, yshift=-50mm]current page.north west)
+    {\char"17D52\char"17B6D\char"180CE\char"1840F\char"1875E};
+
+  % Author
+  \node[inkcolor, font=\rmfamily\fontsize{21}{24}\selectfont,
+        anchor=north west]
+    at ([xshift=15mm, yshift=-80mm]current page.north west)
+    { Compiled by Lim Chunki };
+
+    % Author
+  \node[inkcolor, font=\rmfamily\fontsize{12}{14}\selectfont,
+        anchor=north west]
+    at ([xshift=15mm, yshift=-90mm]current page.north west)
+    { Vertical, Character-Only Version
+    % , \copyright 2026 
+    };
+
+  % % Bottom credit
+  % \node[inkcolor!60, font=\rmfamily\fontsize{8}{10}\selectfont,
+  %       anchor=south west]
+  %   at ([xshift=15mm, yshift=15mm]current page.south west)
+  %   {powered by Andrew West@BabelStone \& CCAMC};
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,143 @@
+%! TEX program = xelatex
+\documentclass[a4paper]{article}
+\usepackage{tikz}
+\usepackage{geometry}
+\usepackage{fontspec}
+% \usepackage{xeCJK}
+
+\usepackage{ucharclasses}
+
+% \newfontfamily\tangutfont{NewTangut2_008.ttf}
+\newfontfamily\tangutfont{Tangut_N4694_V17.ttf}[Path=C:/Users/tnter/AppData/Local/Microsoft/Windows/Fonts/]
+\setTransitionTo{Tangut}{\tangutfont}
+\setTransitionFrom{Tangut}{\normalfont}
+
+\def\cs{1.8}
+\def\li{2.15}
+\def\COLS{8}
+
+% computed once
+\pgfmathsetmacro{\ps}{\cs/3}
+\pgfmathsetmacro{\ru}{\cs+\ps}
+\pgfmathsetmacro{\hs}{\cs/2}
+
+% packages to add
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{xcolor}
+
+% replace \geometry line
+\geometry{margin=22mm, top=28mm, bottom=26mm}
+
+% before \begin{document}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0}
+% \renewcommand{\footrulewidth}{0.3pt}
+
+% header
+\fancyhead[L]{\small Tangut Workbook}
+\fancyhead[C]{\Huge\char"17D52\char"17B6D\char"180CE\char"1840F\char"1875E}
+\fancyhead[R]{\small Compiled by Lim Chunki}
+
+% footer
+\fancyfoot[L]{\small\textcolor{gray!70}{Newly Collected Grains of Gold or Golden Guide}}
+\fancyfoot[C]{\small\thepage}
+\fancyfoot[R]{\small\textcolor{gray!70}{powered by Andrew West@BabelStone \& CCAMC}
+}
+
+\newcommand{\charrow}[7]{% #1=row, #2=char, #3=pinyin, #4=Sofronov, #5=LFW's numbering, #6=four-corner, #7=meaning
+  \pgfmathsetmacro{\yb}{#1*\ru}
+  \pgfmathsetmacro{\pcen}{\yb+\cs+\ps/2}
+  \pgfmathtruncatemacro{\lastC}{\COLS-1}
+
+  % info cell thirds
+  \pgfmathsetmacro{\iho}{\yb+\ru*0.8}
+  \pgfmathsetmacro{\iht}{\yb+\ru*0.6}
+  \pgfmathsetmacro{\ihq}{\yb+\ru*0.4}
+  \pgfmathsetmacro{\ihf}{\yb+\ru*0.2}
+
+  % left info cell border
+  \draw[black, line width=0.7pt]
+    (0, \yb cm) rectangle (\li cm, \yb cm + \ru cm);
+
+    % Sofronov
+  \node[font=\fontsize{5}{6}\selectfont, text=gray!70, anchor=west]
+    at (0.12cm, \iho cm) {Sofronov};
+  \node[font=\fontsize{7}{8}\selectfont, anchor=east]
+    at (\li cm - 0.12cm, \iho cm) {#4};
+    
+  \node[font=\fontsize{5}{6}\selectfont, text=gray!70, anchor=west]
+    at (0.12cm, \iht cm) {LFW};
+  \node[font=\fontsize{7}{8}\selectfont, anchor=east]
+    at (\li cm - 0.12cm, \iht cm) {#5};
+
+  % radical
+  \node[font=\fontsize{5}{6}\selectfont, text=gray!70, anchor=west]
+    at (0.12cm, \ihq cm) {corners};
+  \node[font=\fontsize{7}{8}\selectfont, anchor=east]
+    at (\li cm - 0.12cm, \ihq cm) {#6};
+
+  % stroke count
+  \node[font=\fontsize{7}{8}\selectfont, %text=gray!70, 
+  anchor=west] at (0.12cm, \ihf cm) {"#7"};
+  % \node[font=\fontsize{7}{8}\selectfont, anchor=east]
+    % at (\li cm - 0.12cm, \ihf cm) };
+
+  % fanqie
+  % \node[font=\fontsize{5}{6}\selectfont, text=gray!70, anchor=west]
+  %   at (0.12cm, \ibot cm) {反切};
+  % \node[font=\fontsize{7}{8}\selectfont, anchor=east]
+  %   at (\li cm - 0.12cm, \ibot cm) {#6};
+
+  \foreach \c in {0,...,\lastC} {
+    \pgfmathsetmacro{\xb}{\li+\c*\cs}
+    \pgfmathsetmacro{\xcen}{\xb+\hs}
+    \pgfmathsetmacro{\ycen}{\yb+\hs}
+
+    \draw[black, line width=0.7pt]
+      (\xb cm, \yb cm + \cs cm)
+      rectangle (\xb cm + \cs cm, \yb cm + \ru cm);
+    \draw[gray!60, line width=0.3pt]
+      (\xcen cm, \yb cm) -- (\xcen cm, \yb cm + \cs cm);
+    \draw[gray!60, line width=0.3pt]
+      (\xb cm, \ycen cm) -- (\xb cm + \cs cm, \ycen cm);
+    \draw[black, line width=0.7pt]
+      (\xb cm, \yb cm) rectangle (\xb cm + \cs cm, \yb cm + \cs cm);
+
+    \ifnum\c<3
+      \node[text=red!30, font=\fontsize{40}{40}\selectfont]
+        at (\xcen cm, \ycen cm) {#2};
+      \node[text=red!30, font=\fontsize{7}{8}\selectfont]
+        at (\xcen cm, \pcen cm) {#3};
+    \fi
+  }
+}
+
+\begin{document}
+\noindent
+% \vspace*{0.25cm}
+\begin{tikzpicture}
+  \pgfmathsetmacro{\W}{\li+\cs*\COLS}
+  \pgfmathsetmacro{\H}{\ru*10}
+
+
+
+
+\charrow{9}{\char"17E66 }{mə̱¹}{3513}{1273}{2804 50}{sky; heaven}
+\charrow{8}{\char"17F3B }{lləh²}{2627}{4023}{2342 20}{land; soil}
+\charrow{7}{\char"17BE8 }{rur¹}{4713}{2479}{8021 40}{world}
+\charrow{6}{\char"1742F }{qae̱h²}{4719}{1882}{8021 42}{boundary}
+\charrow{5}{\char"170A5 }{ne²}{1926}{1607}{2101 42}{before}
+\charrow{4}{\char"17F94 }{bi̱²}{2449}{5728}{2240 80}{sun}
+\charrow{3}{\char"17F11 }{lhih²}{2814}{3313}{2481 22}{moon}
+\charrow{2}{\char"17258 }{tśhə¹}{1374}{5540}{1744 24}{a pronoun}
+\charrow{1}{\char"18768 }{zoh²}{4861}{2612}{8040 00}{time}
+\charrow{0}{\char"17713 }{śa²}{4184}{0909}{5024 22}{to appear}
+
+
+
+
+  \draw[black, line width=1.4pt] (0,0) rectangle (\W cm, \H cm);
+\end{tikzpicture}
+\end{document}
